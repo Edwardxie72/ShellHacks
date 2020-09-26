@@ -2,6 +2,7 @@ using System;
 using Platformer.Gameplay;
 using UnityEngine;
 using static Platformer.Core.Simulation;
+using UnityEngine.UI;
 
 namespace Platformer.Mechanics
 {
@@ -13,15 +14,22 @@ namespace Platformer.Mechanics
         /// <summary>
         /// The maximum hit points for the entity.
         /// </summary>
-        public int maxHP = 1;
+        public int maxHP = 3;
 
         /// <summary>
         /// Indicates if the entity should be considered 'alive'.
         /// </summary>
         public bool IsAlive => currentHP > 0;
 
-        int currentHP;
+        public int currentHP;
 
+        public Image[] hearts;
+        public Sprite filledHeart;
+        public Sprite emptyHeart;
+
+        public void setMax() {
+            currentHP = maxHP;
+        }
         /// <summary>
         /// Increment the HP of the entity.
         /// </summary>
@@ -55,6 +63,17 @@ namespace Platformer.Mechanics
         void Awake()
         {
             currentHP = maxHP;
+        }
+
+        void Update() {
+            for (int i = 0; i < hearts.Length; i++) {
+                if (i < currentHP) {
+                    hearts[i].sprite = filledHeart;
+                }
+                else {
+                    hearts[i].sprite = emptyHeart;
+                }
+            }
         }
     }
 }
