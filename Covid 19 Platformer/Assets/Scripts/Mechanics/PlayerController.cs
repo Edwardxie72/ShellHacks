@@ -148,6 +148,7 @@ namespace Platformer.Mechanics
             
             if (enemy != null)
             {
+                Debug.Log(enemy.getDistance(transform.position));
                 // Handle losing mask
                 if (health.maskHP > 0)
                 {

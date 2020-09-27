@@ -23,7 +23,7 @@ namespace Platformer.Mechanics
         {
             double x = transform.position.x - pos.x;
             double y = transform.position.y - pos.y;
-            return System.Math.Sqrt(x * x - y * y);
+            return System.Math.Sqrt(x * x + y * y);
         }
     }
 }
