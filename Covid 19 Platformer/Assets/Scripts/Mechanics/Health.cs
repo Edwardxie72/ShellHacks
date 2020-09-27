@@ -15,6 +15,7 @@ namespace Platformer.Mechanics
         /// The maximum hit points for the entity.
         /// </summary>
         public int maxHP = 3;
+		public int maskHP = 1;
 
         /// <summary>
         /// Indicates if the entity should be considered 'alive'.
@@ -26,6 +27,10 @@ namespace Platformer.Mechanics
         public Image[] hearts;
         public Sprite filledHeart;
         public Sprite emptyHeart;
+		
+		public Image mask;
+		public Sprite filledMask;
+		public Sprite emptyMask;
 
         public void setMax() {
             currentHP = maxHP;
@@ -44,12 +49,17 @@ namespace Platformer.Mechanics
         /// </summary>
         public void Decrement()
         {
-            currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
-            if (currentHP == 0)
-            {
-                var ev = Schedule<HealthIsZero>();
-                ev.health = this;
-            }
+			if (maskHP > 0) {
+				maskHP = Mathf.Clamp(maskHP - 1, 0, maskHP);
+			}
+			else {
+				currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
+				if (currentHP == 0)
+				{
+					var ev = Schedule<HealthIsZero>();
+					ev.health = this;
+				}
+			}
         }
 
         /// <summary>
@@ -74,6 +84,13 @@ namespace Platformer.Mechanics
                     hearts[i].sprite = emptyHeart;
                 }
             }
+			
+			if (maskHP > 0) {
+				mask.sprite = filledMask;
+			}
+			else {
+				mask.sprite = emptyMask;
+			}
         }
     }
 }
