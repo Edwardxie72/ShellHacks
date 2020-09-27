@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Platformer.Core;
+using Platformer.Mechanics;
 using Platformer.Model;
 using UnityEngine;
+
+using System;
 
 namespace Platformer.Gameplay
 {
@@ -13,15 +16,34 @@ namespace Platformer.Gameplay
     public class PlayerDeath : Simulation.Event<PlayerDeath>
     {
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        //public PlayerController player;
 
         public override void Execute()
         {
-            var player = model.player;
-            if (player.health.IsAlive)
+            //var player = model.player;
+
+            if (model.player.controlEnabled)
             {
-                player.health.Die();
-                
+                Debug.Log("reeeeeee");
             }
+            else
+            {
+                //Debug.Log(player.controlEnabled);
+                //Debug.Log(model);
+                Debug.Log("????");
+                //if (player.controlEnabled)
+                //{
+                    //Debug.Log("ddddds");
+                //}
+            }
+
+            
+            //if (player.health.IsAlive)
+            //{
+                //player.health.Die();
+                
+            //}
+            /*
 			model.virtualCamera.m_Follow = null;
 			model.virtualCamera.m_LookAt = null;
 			// player.collider.enabled = false;
@@ -31,7 +53,7 @@ namespace Platformer.Gameplay
 				player.audioSource.PlayOneShot(player.ouchAudio);
 			player.animator.SetTrigger("hurt");
 			player.animator.SetBool("dead", true);
-			Simulation.Schedule<PlayerSpawn>(2);
+			Simulation.Schedule<PlayerSpawn>(2);*/
         }
     }
 }

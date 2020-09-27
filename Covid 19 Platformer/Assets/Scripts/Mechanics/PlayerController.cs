@@ -18,6 +18,9 @@ namespace Platformer.Mechanics
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
 
+        public float smallRadius = 1;
+        public float bigRadius = 2;
+
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
@@ -136,6 +139,27 @@ namespace Platformer.Mechanics
             Jumping,
             InFlight,
             Landed
+        }
+        private void OnTriggerStay2D(Collider2D collision)
+        { 
+            var enemy = collision.gameObject.GetComponent<EnemyPersonController>();
+            if (enemy != null)
+            {
+                // Handle losing mask
+
+                if (enemy.getDistance(transform.position) <= smallRadius)
+                {
+                    // die
+                    Debug.Log("small radius");
+                }
+                else
+                {
+                    if (enemy.getDistance(transform.position) <= bigRadius)
+                    {
+                        Debug.Log("big radius");
+                    }
+                }
+            }
         }
     }
 }
