@@ -37,6 +37,8 @@ namespace Platformer.Mechanics
         public Health health;
         public bool controlEnabled = true;
 
+        private bool lost = false;
+
         bool jump;
         Vector2 move;
         SpriteRenderer spriteRenderer;
@@ -143,9 +145,40 @@ namespace Platformer.Mechanics
         private void OnTriggerStay2D(Collider2D collision)
         { 
             var enemy = collision.gameObject.GetComponent<EnemyPersonController>();
+            
             if (enemy != null)
             {
                 // Handle losing mask
+                if (health.maskHP > 0)
+                {
+					Debug.Log("Small Radius + Mask");
+                    // short distance
+                    if (enemy.getDistance(transform.position) <= smallRadius)
+                    {
+                        if (!lost)
+                        {
+                            health.Decrement();
+                            lost = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (enemy.getDistance(transform.position) <= bigRadius)
+                    {
+                        if (!lost)
+                        {
+                            health.Decrement();
+                            lost = true;
+                        }
+                    }
+                }
+
+                if (enemy.getDistance(transform.position) > bigRadius)
+                {
+                    lost = false;
+                }
+
 
                 if (enemy.getDistance(transform.position) <= smallRadius)
                 {
